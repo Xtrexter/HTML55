@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BarberPoint – Men's Grooming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #111; --bg2: #161616; --bg3: #1c1c1c;
+      --border: #252525; --text: #ccc; --muted: #666;
+      --white: #f0f0f0; --accent: #c8a96e;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 1.6; }
+
+    nav {
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 0 40px; display: flex; align-items: center;
+      justify-content: space-between; height: 58px; position: sticky; top: 0; z-index: 50;
+    }
+    .nav-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; cursor: pointer; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links button {
+      background: none; border: none; color: var(--muted); font-family: 'Barlow', sans-serif;
+      font-size: 0.88rem; cursor: pointer; padding: 6px 14px; border-radius: 3px; transition: color 0.15s, background 0.15s;
+    }
+    .nav-links button:hover { color: var(--white); background: var(--bg3); }
+    .nav-links button.active { color: var(--white); background: var(--bg3); }
+
+    .page { display: none; max-width: 1000px; margin: 0 auto; padding: 50px 40px 80px; }
+    .page.active { display: block; }
+
+    /* HERO */
+    .hero { margin-bottom: 40px; }
+    .hero-tag { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 700; color: var(--white); line-height: 1.1; margin-bottom: 16px; }
+    .hero p { color: var(--muted); max-width: 500px; font-size: 0.95rem; }
+
+    .info-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 40px; }
+    .info-box { background: var(--bg2); padding: 22px 24px; }
+    .info-box .label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .info-box .val { font-size: 0.97rem; font-weight: 600; color: var(--white); }
+    .info-box .sub { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
+
+    .section-head { margin-bottom: 22px; }
+    .section-head h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .section-head p { color: var(--muted); font-size: 0.88rem; }
+
+    /* HİZMETLER */
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 40px; }
+    .svc { background: var(--bg2); padding: 22px 22px; transition: background 0.15s; }
+    .svc:hover { background: var(--bg3); }
+    .svc-name { font-weight: 600; color: var(--white); margin-bottom: 5px; font-size: 0.97rem; }
+    .svc-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 14px; line-height: 1.55; }
+    .svc-price { font-size: 0.9rem; color: var(--accent); font-weight: 600; }
+    .svc-dur { font-size: 0.76rem; color: #444; margin-top: 2px; }
+
+    /* NEDEN BİZ */
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .why-card { background: var(--bg2); padding: 24px 22px; transition: background 0.15s; }
+    .why-card:hover { background: var(--bg3); }
+    .why-num { font-family: 'Barlow Condensed', sans-serif; font-size: 2rem; font-weight: 700; color: #2a2a2a; margin-bottom: 10px; }
+    .why-card h4 { font-weight: 600; color: var(--white); font-size: 0.95rem; margin-bottom: 6px; }
+    .why-card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    /* STİLLER */
+    .styles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .style-card { background: var(--bg2); padding: 26px 24px; transition: background 0.15s; }
+    .style-card:hover { background: var(--bg3); }
+    .style-card .icon { font-size: 1.5rem; margin-bottom: 12px; display: block; }
+    .style-card h3 { font-weight: 600; color: var(--white); font-size: 0.97rem; margin-bottom: 8px; }
+    .style-card p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+    .style-card .fit { font-size: 0.78rem; color: #555; }
+    .style-card .fit span { color: var(--accent); }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .tag { font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: #555; border: 1px solid #2a2a2a; padding: 3px 8px; border-radius: 2px; }
+    .tag.gold { color: var(--accent); border-color: #3a3020; }
+
+    /* BAKIM */
+    .care-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 40px; }
+    .care-card { background: var(--bg2); padding: 28px 26px; transition: background 0.15s; }
+    .care-card:hover { background: var(--bg3); }
+    .care-card h3 { font-weight: 600; color: var(--white); font-size: 0.97rem; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .care-card ul { padding-left: 16px; }
+    .care-card ul li { font-size: 0.85rem; color: var(--muted); margin-bottom: 7px; line-height: 1.6; }
+
+    .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .prod-card { background: var(--bg2); padding: 22px 20px; transition: background 0.15s; }
+    .prod-card:hover { background: var(--bg3); }
+    .prod-card h4 { font-weight: 600; color: var(--white); font-size: 0.9rem; margin-bottom: 6px; }
+    .prod-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.55; margin-bottom: 8px; }
+    .prod-card .ideal { font-size: 0.75rem; color: var(--accent); }
+
+    /* İLETİŞİM */
+    .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .contact-info { background: var(--bg2); padding: 32px 28px; }
+    .contact-info h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 22px; }
+    .ci-item { margin-bottom: 20px; }
+    .ci-label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+    .ci-val { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+    .hours-table tr td { font-size: 0.84rem; padding: 5px 0; color: var(--muted); border-bottom: 1px solid #1e1e1e; }
+    .hours-table tr td:last-child { text-align: right; color: var(--text); }
+    .hours-table tr:last-child td { border-bottom: none; }
+
+    .contact-form { background: var(--bg2); padding: 32px 28px; }
+    .contact-form h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 22px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+      font-family: 'Barlow', sans-serif; font-size: 0.9rem; padding: 10px 12px; border-radius: 3px; outline: none; transition: border-color 0.15s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-group select option { background: #1c1c1c; }
+    .btn-submit {
+      background: var(--accent); color: #111; font-family: 'Barlow', sans-serif; font-weight: 700;
+      font-size: 0.85rem; border: none; padding: 11px 28px; cursor: pointer; border-radius: 3px;
+      letter-spacing: 0.06em; text-transform: uppercase; transition: opacity 0.15s; margin-top: 4px;
+    }
+    .btn-submit:hover { opacity: 0.85; }
+
+    .map-placeholder { margin-top: 1px; background: var(--bg2); border: 1px solid var(--border); border-top: none; padding: 22px 28px; display: flex; align-items: center; gap: 12px; }
+    .map-placeholder .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .map-placeholder span { font-size: 0.85rem; color: var(--muted); }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: #444;
+    }
+    .footer-logo { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; color: #333; }
+    .footer-logo span { color: #5a4a2a; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: #444; text-decoration: none; }
+    .footer-links a:hover { color: #666; }
+
+    @media (max-width: 700px) {
+      nav { padding: 0 16px; }
+      .nav-links button { padding: 6px 8px; font-size: 0.78rem; }
+      .page { padding: 30px 16px 60px; }
+      .hero h1 { font-size: 2rem; }
+      .info-row { grid-template-columns: 1fr 1fr; }
+      .services-grid, .why-grid, .styles-grid, .products-grid { grid-template-columns: 1fr 1fr; }
+      .care-grid, .contact-wrap { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 10px; padding: 18px 16px; text-align: center; }
+    }
+    @media (max-width: 420px) {
+      .info-row, .services-grid, .why-grid, .styles-grid, .products-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Barber<span>Point</span></div>
+  <div class="nav-links">
+    <button class="active" onclick="showPage('home',this)">Home</button>
+    <button onclick="showPage('styles',this)">Hairstyles</button>
+    <button onclick="showPage('care',this)">Grooming</button>
+    <button onclick="showPage('contact',this)">Contact</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="home">
+  <div class="hero">
+    <div class="hero-tag">✦ Professional Men's Barbershop — Chicago, IL</div>
+    <h1>Sharp Cuts.<br/>Clean Lines.</h1>
+    <p>Located in the heart of Wicker Park, BarberPoint has been delivering premium cuts and grooming services since 2014. Walk-ins welcome, appointments preferred.</p>
+  </div>
+
+  <div class="info-row">
+    <div class="info-box">
+      <div class="label">Address</div>
+      <div class="val">1482 N Milwaukee Ave</div>
+      <div class="sub">Wicker Park, Chicago IL 60622</div>
+    </div>
+    <div class="info-box">
+      <div class="label">Hours</div>
+      <div class="val">Mon–Fri 9AM–9PM</div>
+      <div class="sub">Sat 9–8 · Sun 10–6</div>
+    </div>
+    <div class="info-box">
+      <div class="label">Phone</div>
+      <div class="val">(312) 555-0194</div>
+      <div class="sub">Text or call</div>
+    </div>
+    <div class="info-box">
+      <div class="label">Experience</div>
+      <div class="val">10+ Years</div>
+      <div class="sub">4 master barbers</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Services & Pricing</h2>
+    <p>All services include a hot towel finish and complimentary beverage.</p>
+  </div>
+  <div class="services-grid" style="margin-bottom:40px">
+    <div class="svc">
+      <div class="svc-name">Haircut</div>
+      <div class="svc-desc">Classic or modern cut, scissors or clipper. Includes wash, cut and style.</div>
+      <div class="svc-price">$35</div>
+      <div class="svc-dur">~45 min</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Beard Trim</div>
+      <div class="svc-desc">Shape, line-up and edge. Hot towel and straight razor finish.</div>
+      <div class="svc-price">$25</div>
+      <div class="svc-dur">~30 min</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Cut + Beard Combo</div>
+      <div class="svc-desc">Full haircut and beard service bundled together at a discount.</div>
+      <div class="svc-price">$55</div>
+      <div class="svc-dur">~70 min</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Fade</div>
+      <div class="svc-desc">Skin, low, mid or high fade with precision clipper work.</div>
+      <div class="svc-price">$40</div>
+      <div class="svc-dur">~45 min</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Head Shave</div>
+      <div class="svc-desc">Full shave with hot lather, straight razor and scalp treatment.</div>
+      <div class="svc-price">$45</div>
+      <div class="svc-dur">~50 min</div>
+    </div>
+    <div class="svc">
+      <div class="svc-name">Kids Cut (12 & under)</div>
+      <div class="svc-desc">Patient service for the youngest customers, wash included.</div>
+      <div class="svc-price">$22</div>
+      <div class="svc-dur">~30 min</div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Why BarberPoint</h2>
+    <p>What sets us apart from the rest</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">01</div>
+      <h4>By Appointment</h4>
+      <p>No waiting around. Book your slot online or by phone and walk in right on time.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">02</div>
+      <h4>Master Barbers</h4>
+      <p>Every barber at BarberPoint has a minimum of 5 years of professional experience.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">03</div>
+      <h4>Premium Products</h4>
+      <p>We use and stock only professional-grade grooming products — Baxter, American Crew, and Layrite.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">04</div>
+      <h4>Clean & Modern Space</h4>
+      <p>Sanitized tools, leather chairs, and a relaxed atmosphere. No crowds, no rush.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">05</div>
+      <h4>Walk-ins Welcome</h4>
+      <p>Can't plan ahead? Drop by — we always keep a few slots open for walk-ins each day.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-num">06</div>
+      <h4>Free Consultation</h4>
+      <p>Not sure what cut fits your face shape? We'll talk you through the options before picking up the scissors.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HAIRSTYLES -->
+<div class="page" id="styles">
+  <div class="section-head">
+    <h2>Men's Hairstyles</h2>
+    <p>The most popular cuts — what they are, who they suit, and how much upkeep they need</p>
+  </div>
+  <div class="styles-grid">
+    <div class="style-card">
+      <span class="icon">✂️</span>
+      <h3>Undercut</h3>
+      <p>Sides and back cut close, top left long. Can be worn slicked back, to the side, or textured. One of the most versatile cuts available.</p>
+      <div class="fit">Best for: <span>Oval, square, rectangular faces</span></div>
+      <div class="tags"><span class="tag gold">Versatile</span><span class="tag">Medium Maintenance</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">💈</span>
+      <h3>Fade</h3>
+      <p>Gradual taper from skin or short at the sides up to longer hair on top. Skin, low, mid and high fade are the four main variations.</p>
+      <div class="fit">Best for: <span>All face shapes</span></div>
+      <div class="tags"><span class="tag gold">Modern</span><span class="tag">Every 3–4 Weeks</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">🪒</span>
+      <h3>Buzz Cut</h3>
+      <p>All hair clipped to a uniform length. The lowest-maintenance cut there is. Suits men with defined jawlines and prominent features.</p>
+      <div class="fit">Best for: <span>Square, diamond faces</span></div>
+      <div class="tags"><span class="tag gold">Low Effort</span><span class="tag">Easy Upkeep</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">🪮</span>
+      <h3>Classic Taper</h3>
+      <p>Scissors on top, tapered sides — clean and timeless. Works in professional settings and casual environments equally well.</p>
+      <div class="fit">Best for: <span>Oval, oblong faces</span></div>
+      <div class="tags"><span class="tag gold">Classic</span><span class="tag">Office Ready</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">💧</span>
+      <h3>Pompadour</h3>
+      <p>Hair is pushed up and back from the forehead. Requires a strong-hold pomade. High-impact look with a retro edge.</p>
+      <div class="fit">Best for: <span>Round, heart-shaped faces</span></div>
+      <div class="tags"><span class="tag gold">Retro</span><span class="tag">High Styling</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">🌀</span>
+      <h3>Textured Crop</h3>
+      <p>Short on sides, choppy and textured on top. Minimal product needed. Great for thick or wavy hair that needs control without structure.</p>
+      <div class="fit">Best for: <span>Round, oval faces</span></div>
+      <div class="tags"><span class="tag gold">Natural</span><span class="tag">Minimal Product</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">📐</span>
+      <h3>Taper Cut</h3>
+      <p>Similar to a fade but shorter and more subtle — only the neckline and ears are tapered. Clean and natural-looking finish.</p>
+      <div class="fit">Best for: <span>All face shapes</span></div>
+      <div class="tags"><span class="tag gold">Clean</span><span class="tag">Easy Maintain</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">🔲</span>
+      <h3>French Crop</h3>
+      <p>Top cut short with a short fringe sitting at the forehead. Very popular in European barbering. Suits rounder faces particularly well.</p>
+      <div class="fit">Best for: <span>Round, square faces</span></div>
+      <div class="tags"><span class="tag gold">Minimal</span><span class="tag">European Style</span></div>
+    </div>
+    <div class="style-card">
+      <span class="icon">〰️</span>
+      <h3>Medium Wavy</h3>
+      <p>Natural wave pattern kept at medium length, just above the shoulder. Works best on thick hair. Low product needed, air-dry friendly.</p>
+      <div class="fit">Best for: <span>Oval, oblong faces</span></div>
+      <div class="tags"><span class="tag gold">Relaxed</span><span class="tag">Moisturizer</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- GROOMING -->
+<div class="page" id="care">
+  <div class="section-head">
+    <h2>Grooming Guide</h2>
+    <p>Simple routines and the right products for every hair type</p>
+  </div>
+  <div class="care-grid" style="margin-bottom:40px">
+    <div class="care-card">
+      <h3>Washing & Drying</h3>
+      <ul>
+        <li>Washing daily strips natural oils — 3–4 times per week is enough for most hair types.</li>
+        <li>Use a shampoo matched to your scalp type: oily, dry, or normal.</li>
+        <li>Massage the scalp with fingertips in circular motions, not nails.</li>
+        <li>Always follow with conditioner on the mid-lengths and ends.</li>
+        <li>Keep the blow dryer on medium heat and 6+ inches away from the scalp.</li>
+        <li>Pat dry with a towel — don't rub, it causes frizz and breakage.</li>
+      </ul>
+    </div>
+    <div class="care-card">
+      <h3>Beard Care</h3>
+      <ul>
+        <li>Wash your beard 2–3 times a week with a dedicated beard wash, not face soap.</li>
+        <li>Beard oil softens coarse hair and moisturizes the skin underneath.</li>
+        <li>Apply balm for hold and shape when styling a longer beard.</li>
+        <li>Trim the neckline regularly — about two finger-widths above the Adam's apple.</li>
+        <li>A boar bristle brush distributes oil evenly and trains the hair direction.</li>
+        <li>Visit your barber every 3–4 weeks for edge work and shape maintenance.</li>
+      </ul>
+    </div>
+    <div class="care-card">
+      <h3>Scalp Health</h3>
+      <ul>
+        <li>A healthy scalp is the foundation of healthy hair growth.</li>
+        <li>Exfoliate once a week with a scalp scrub to remove buildup.</li>
+        <li>Avoid scratching — it damages the follicles over time.</li>
+        <li>Dandruff that doesn't clear with anti-dandruff shampoo should be seen by a dermatologist.</li>
+        <li>Staying hydrated and getting enough sleep directly impacts scalp condition.</li>
+      </ul>
+    </div>
+    <div class="care-card">
+      <h3>General Tips</h3>
+      <ul>
+        <li>Fades and tight cuts need a barber visit every 3–4 weeks to stay sharp.</li>
+        <li>Always warm the product between your palms before applying — never put cold wax directly on dry hair.</li>
+        <li>Apply product to slightly damp hair for better distribution and hold.</li>
+        <li>Use a comb to set direction first, then fingers to add texture.</li>
+        <li>Less product is almost always better — you can add more, you can't take it back.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>Product Guide</h2>
+    <p>Which product to use for which look</p>
+  </div>
+  <div class="products-grid">
+    <div class="prod-card">
+      <h4>Wax</h4>
+      <p>Medium hold, matte finish. Easy to rework throughout the day. The most forgiving daily option.</p>
+      <div class="ideal">Best for: everyday styles</div>
+    </div>
+    <div class="prod-card">
+      <h4>Pomade</h4>
+      <p>High hold, shiny finish. Water-based versions wash out easily. Oil-based last longer but need more effort to remove.</p>
+      <div class="ideal">Best for: pompadour, slick back</div>
+    </div>
+    <div class="prod-card">
+      <h4>Clay</h4>
+      <p>Strong hold, matte finish. Adds volume and texture. Works especially well on thick or coarse hair.</p>
+      <div class="ideal">Best for: textured crops, undercuts</div>
+    </div>
+    <div class="prod-card">
+      <h4>Spray</h4>
+      <p>Light hold, used after styling to lock the shape in place. Good for fine hair that needs volume without weight.</p>
+      <div class="ideal">Best for: finishing, fine hair</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="contact">
+  <div class="section-head">
+    <h2>Contact & Appointments</h2>
+    <p>Book online, call us, or just walk in</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3>Shop Info</h3>
+      <div class="ci-item">
+        <div class="ci-label">Address</div>
+        <div class="ci-val">1482 N Milwaukee Ave<br/>Wicker Park, Chicago, IL 60622</div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-label">Phone</div>
+        <div class="ci-val">(312) 555-0194</div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-label">Email</div>
+        <div class="ci-val">hello@barberpoint.com</div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-label">Instagram</div>
+        <div class="ci-val">@barberpointchi</div>
+      </div>
+      <div class="ci-item">
+        <div class="ci-label">Hours</div>
+        <table class="hours-table">
+          <tr><td>Monday – Friday</td><td>9:00 AM – 9:00 PM</td></tr>
+          <tr><td>Saturday</td><td>9:00 AM – 8:00 PM</td></tr>
+          <tr><td>Sunday</td><td>10:00 AM – 6:00 PM</td></tr>
+        </table>
+      </div>
+      <div class="ci-item">
+        <div class="ci-label">Parking</div>
+        <div class="ci-val">Street parking available on Milwaukee Ave. Nearest CTA stop: Damen Blue Line.</div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Book an Appointment</h3>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="John Doe"/>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" placeholder="(312) 000-0000"/>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Service</label>
+        <select>
+          <option>Haircut — $35</option>
+          <option>Beard Trim — $25</option>
+          <option>Cut + Beard Combo — $55</option>
+          <option>Fade — $40</option>
+          <option>Head Shave — $45</option>
+          <option>Kids Cut — $22</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Date & Time</label>
+        <input type="datetime-local"/>
+      </div>
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <textarea placeholder="Any specific requests or style references..."></textarea>
+      </div>
+      <button class="btn-submit">Request Appointment</button>
+    </div>
+  </div>
+  <div class="map-placeholder">
+    <div class="dot"></div>
+    <span>1482 N Milwaukee Ave, Wicker Park, Chicago, IL 60622 — Near Damen Blue Line Station</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Barber<span>Point</span></div>
+  <div class="footer-links">
+    <a href="#">Instagram</a>
+    <a href="#">Facebook</a>
+    <a href="#">Google Maps</a>
+  </div>
+  <span>© 2025 BarberPoint Chicago</span>
+</footer>
+
+<script>
+  function showPage(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
