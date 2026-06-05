@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim & Randevu | Elite Cuts</title>
+    <meta name="description" content="Randevu almak veya bizimle iletişime geçmek için formu doldurun veya bizi arayın.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="Elite Cuts Logo">
+                <div class="logo-text">
+                    <h1>Elite Cuts</h1>
+                    <span>Profesyonel Stil Merkezi</span>
+                </div>
+            </div>
+            <nav class="navbar">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Ana Sayfa</a></li>
+                    <li><a href="stiller.html">Saç Stilleri</a></li>
+                    <li><a href="bakim.html">Bakım Rehberi</a></li>
+                    <li><a href="sss.html">SSS</a></li>
+                    <li><a href="iletisim.html" class="active">İletişim</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-banner" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/images/style1.jpg') no-repeat center center/cover; padding: 100px 0; color: white; text-align: center;">
+        <div class="container">
+            <h1>İletişim & Randevu</h1>
+            <p>Size bir tık kadar yakınız</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Bize Ulaşın</h2>
+                    <p>Sorularınız, önerileriniz veya randevu talepleriniz için aşağıdaki kanalları kullanabilirsiniz.</p>
+                    
+                    <div class="info-item" style="margin-top: 30px; display: flex; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-map-marker-alt" style="font-size: 1.5rem; color: var(--secondary-color); margin-right: 20px;"></i>
+                        <div>
+                            <h4 style="color: var(--primary-color);">Adres</h4>
+                            <p>Berber Sokak No:12, Beşiktaş, İstanbul</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item" style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-phone" style="font-size: 1.5rem; color: var(--secondary-color); margin-right: 20px;"></i>
+                        <div>
+                            <h4 style="color: var(--primary-color);">Telefon</h4>
+                            <p>+90 212 555 44 33</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item" style="display: flex; align-items: center; margin-bottom: 20px;">
+                        <i class="fas fa-envelope" style="font-size: 1.5rem; color: var(--secondary-color); margin-right: 20px;"></i>
+                        <div>
+                            <h4 style="color: var(--primary-color);">E-posta</h4>
+                            <p>info@elitecuts.com</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links" style="margin-top: 40px;">
+                        <h4 style="margin-bottom: 15px;">Sosyal Medya</h4>
+                        <a href="#" style="font-size: 1.5rem; margin-right: 20px; color: var(--primary-color);"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="font-size: 1.5rem; margin-right: 20px; color: var(--primary-color);"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="font-size: 1.5rem; color: var(--primary-color);"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h2>Randevu Formu</h2>
+                    <form id="appointment-form">
+                        <div class="form-group">
+                            <label for="name">Ad Soyad</label>
+                            <input type="text" id="name" name="name" placeholder="Adınız ve Soyadınız" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon Numarası</label>
+                            <input type="tel" id="phone" name="phone" placeholder="05XX XXX XX XX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Hizmet Seçiniz</label>
+                            <select id="service" name="service">
+                                <option value="haircut">Saç Kesimi</option>
+                                <option value="beard">Sakal Tasarımı</option>
+                                <option value="full">Saç & Sakal Kombin</option>
+                                <option value="care">Saç Bakımı</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Notunuz (Opsiyonel)</label>
+                            <textarea id="message" name="message" placeholder="Eklemek istediğiniz bir not var mı?"></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%; border: none; cursor: pointer;">Randevu Talebi Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Hakkımızda</h3>
+                    <p>Elite Cuts, 2020 yılından beri modern erkek bakımının adresi olmaya devam ediyor. Müşteri memnuniyeti bizim için her şeydir.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Hızlı Linkler</h3>
+                    <ul>
+                        <li><a href="index.html">Ana Sayfa</a></li>
+                        <li><a href="stiller.html">Saç Stilleri</a></li>
+                        <li><a href="bakim.html">Bakım Rehberi</a></li>
+                        <li><a href="sss.html">SSS</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Hizmetler</h3>
+                    <ul>
+                        <li>Saç Kesimi</li>
+                        <li>Sakal Tasarımı</li>
+                        <li>Cilt Bakımı</li>
+                        <li>Saç Boyama</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>İletişim</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Berber Sokak No:12, İstanbul</p>
+                    <p><i class="fas fa-phone"></i> +90 212 555 44 33</p>
+                    <p><i class="fas fa-envelope"></i> info@elitecuts.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Elite Cuts. Tüm Hakları Saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
